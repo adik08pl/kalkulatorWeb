@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kalkulator</title>
+</head>
+<body>
+<form id="form">
+  <input type="number" name="number1" placeholder="pierwsza liczba">
+  <input type="number" name="number2" placeholder="druga liczba">
+  <input type="radio" name="equation" value="1" checked>Dodawanie
+  <input type="radio" name="equation" value="2">Odejmowanie
+  <input type="radio" name="equation" value="3">Mnożenie
+  <input type="radio" name="equation" value="4">Dzielenie
+  <button id="btn">Wyślij</button>
+  <div id="answer"></div>
+</form>
+
+</body>
+<script>
+const div = document.getElementById('answer');
+ const form = document.getElementById('form');
+ document.getElementById('btn').addEventListener('click', (event) => {
+event.preventDefault();
+const formObj = {
+ number1: form.elements.number1.value,
+ number2: form.elements.number2.value,
+ equation: form.elements.equation.value
+ };
+fetch('http://localhost:8080/kalkulator?' + new URLSearchParams(formObj))
+ .then(response => response.text())
+ .then((text) => {
+ div.innerHTML = `<h1>${text}</h1>`;
+ });
+ });
+</script>
+</html>
